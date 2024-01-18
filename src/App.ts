@@ -1,10 +1,27 @@
+import TodoList from "./components/TodoList.ts";
+
+const data = [
+  {
+    contents: "todo1",
+    isCompleted: false,
+  },
+  {
+    contents: "todo2",
+    isCompleted: false,
+  },
+  {
+    contents: "todo3",
+    isCompleted: false,
+  },
+];
+
 interface AppProps {
   parentEl: HTMLElement;
 }
 
 class App {
   constructor({ parentEl }: AppProps) {
-    parentEl.innerHTML = "app";
+    new TodoList({ parentEl, state: data });
   }
 }
 
