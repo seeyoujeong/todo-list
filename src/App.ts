@@ -1,4 +1,6 @@
 import TodoList from "./components/TodoList.ts";
+import { Todo } from "./types.ts";
+import TodoForm from "./components/TodoForm.ts";
 
 const data = [
   {
@@ -20,8 +22,26 @@ interface AppProps {
 }
 
 class App {
+  state: Todo[];
+  todoList: TodoList;
   constructor({ parentEl }: AppProps) {
-    new TodoList({ parentEl, state: data });
+    this.state = data;
+
+    new TodoForm({
+      parentEl,
+      addTodo: (contents: string) => {
+        const todo: Todo = { contents, isCompleted: false };
+        const todos = [...this.state, todo];
+
+        this.setState(todos);
+      },
+    });
+    this.todoList = new TodoList({ parentEl, state: this.state });
+  }
+
+  setState(nextState: Todo[]) {
+    this.state = nextState;
+    this.todoList.setState(this.state);
   }
 }
 
