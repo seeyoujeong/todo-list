@@ -36,7 +36,18 @@ class App {
         this.setState(todos);
       },
     });
-    this.todoList = new TodoList({ parentEl, state: this.state });
+    this.todoList = new TodoList({
+      parentEl,
+      state: this.state,
+      deleteTodo: (id: string) => {
+        console.log(id);
+        const filteredTodos = this.state.filter(
+          (_, index) => String(index) !== id,
+        );
+
+        this.setState(filteredTodos);
+      },
+    });
   }
 
   setState(nextState: Todo[]) {
