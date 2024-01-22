@@ -32,6 +32,7 @@ class TodoList {
               `
               <li data-id="${index}" class="todo-list-item">
                 ${todo.contents}
+                <button class="todo-list-item-button">삭제</button>
               </li>
             `,
           )
@@ -54,7 +55,7 @@ class TodoList {
       if (event.target instanceof Element) {
         const liEl = event.target.closest<HTMLLIElement>(".todo-list-item");
 
-        if (liEl) {
+        if (event.target.className === "todo-list-item-button" && liEl) {
           this.deleteTodo(liEl.dataset.id!);
         }
       }
