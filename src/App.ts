@@ -26,7 +26,7 @@ class App {
       state: this.state,
       deleteTodo: (id: string) => {
         const filteredTodos = this.state.filter(
-          (_, index) => String(index) !== id,
+          (_, index) => String(index) !== id
         );
 
         this.setState(filteredTodos);
@@ -35,7 +35,7 @@ class App {
         const toggledTodos = this.state.map((todo, index) =>
           String(index) === id
             ? { ...todo, isCompleted: !todo.isCompleted }
-            : todo,
+            : todo
         );
 
         this.setState(toggledTodos);
