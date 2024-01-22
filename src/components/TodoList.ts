@@ -34,10 +34,11 @@ class TodoList {
             (todo, index) =>
               `
               <li data-id="${index}" class="todo-list-item">
+                <input type="checkbox" ${todo.isCompleted && "checked"} />
                 ${todo.isCompleted ? `<del>${todo.contents}</del>` : todo.contents}
                 <button class="todo-list-item-button">삭제</button>
               </li>
-            `,
+            `
           )
           .join("")}
       </ul>
@@ -51,7 +52,7 @@ class TodoList {
 
   setEvent() {
     const containerEl = document.querySelector<HTMLDivElement>(
-      ".todo-list-container",
+      ".todo-list-container"
     )!;
 
     containerEl.addEventListener("click", (event) => {
