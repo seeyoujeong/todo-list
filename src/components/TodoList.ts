@@ -4,19 +4,22 @@ interface TodoListProps {
   parentEl: HTMLElement;
   state: Todo[];
   deleteTodo: (id: string) => void;
+  toggleTodo: (id: string) => void;
 }
 
 class TodoList {
   targetEl: HTMLElement;
   state: Todo[];
   deleteTodo: TodoListProps["deleteTodo"];
-  constructor({ parentEl, state, deleteTodo }: TodoListProps) {
+  toggleTodo: TodoListProps["toggleTodo"];
+  constructor({ parentEl, state, deleteTodo, toggleTodo }: TodoListProps) {
     this.targetEl = document.createElement("div");
     this.targetEl.className = "todo-list-container";
     parentEl.append(this.targetEl);
 
     this.state = state;
     this.deleteTodo = deleteTodo;
+    this.toggleTodo = toggleTodo;
 
     this.render();
 
@@ -31,7 +34,7 @@ class TodoList {
             (todo, index) =>
               `
               <li data-id="${index}" class="todo-list-item">
-                ${todo.contents}
+                ${todo.isCompleted ? `<del>${todo.contents}</del>` : todo.contents}
                 <button class="todo-list-item-button">삭제</button>
               </li>
             `,
@@ -55,8 +58,12 @@ class TodoList {
       if (event.target instanceof Element) {
         const liEl = event.target.closest<HTMLLIElement>(".todo-list-item");
 
-        if (event.target.className === "todo-list-item-button" && liEl) {
-          this.deleteTodo(liEl.dataset.id!);
+        if (liEl && liEl.dataset.id) {
+          if (event.target.className === "todo-list-item-button") {
+            this.deleteTodo(liEl.dataset.id);
+          } else {
+            this.toggleTodo(liEl.dataset.id);
+          }
         }
       }
     });

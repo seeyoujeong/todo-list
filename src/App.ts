@@ -31,6 +31,15 @@ class App {
 
         this.setState(filteredTodos);
       },
+      toggleTodo: (id: string) => {
+        const toggledTodos = this.state.map((todo, index) =>
+          String(index) === id
+            ? { ...todo, isCompleted: !todo.isCompleted }
+            : todo,
+        );
+
+        this.setState(toggledTodos);
+      },
     });
   }
 
