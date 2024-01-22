@@ -34,8 +34,10 @@ class TodoList {
             (todo, index) =>
               `
               <li data-id="${index}" class="todo-list-item">
-                <input type="checkbox" ${todo.isCompleted && "checked"} />
-                ${todo.isCompleted ? `<del>${todo.contents}</del>` : todo.contents}
+                <label>
+                  <input type="checkbox" ${todo.isCompleted && "checked"} />
+                  <span>${todo.isCompleted ? `<del>${todo.contents}</del>` : todo.contents}</span>
+                </label>
                 <button class="todo-list-item-button">삭제</button>
               </li>
             `

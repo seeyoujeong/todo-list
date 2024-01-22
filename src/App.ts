@@ -7,13 +7,17 @@ interface AppProps {
 }
 
 class App {
+  targetEl: HTMLElement;
   state: Todo[];
   todoList: TodoList;
   constructor({ parentEl }: AppProps) {
+    this.targetEl = document.createElement("div");
+    this.targetEl.className = "container";
+    parentEl.append(this.targetEl);
     this.state = JSON.parse(localStorage.getItem("todo-list")!) || [];
 
     new TodoForm({
-      parentEl,
+      parentEl: this.targetEl,
       addTodo: (contents: string) => {
         const todo: Todo = { contents, isCompleted: false };
         const todos = [...this.state, todo];
@@ -22,7 +26,7 @@ class App {
       },
     });
     this.todoList = new TodoList({
-      parentEl,
+      parentEl: this.targetEl,
       state: this.state,
       deleteTodo: (id: string) => {
         const filteredTodos = this.state.filter(
